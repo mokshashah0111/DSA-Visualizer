@@ -180,7 +180,7 @@ const GraphVisualizer: React.FC = () => {
 
     await animation.executeSteps(steps, (step, index) => {
       setNodes(step.data.nodes);
-      setHighlightedNodes(step.highlights || []);
+      setHighlightedNodes((step.highlights || []) as string[]);
     });
   };
 
@@ -235,7 +235,7 @@ const GraphVisualizer: React.FC = () => {
 
     await animation.executeSteps(steps, (step, index) => {
       setNodes(step.data.nodes);
-      setHighlightedNodes(step.highlights || []);
+      setHighlightedNodes((step.highlights || []) as string[]);
     });
   };
 
@@ -328,7 +328,7 @@ const GraphVisualizer: React.FC = () => {
 
     await animation.executeSteps(steps, (step, index) => {
       setNodes(step.data.nodes);
-      setHighlightedNodes(step.highlights || []);
+      setHighlightedNodes((step.highlights || []) as string[]);
     });
   };
 

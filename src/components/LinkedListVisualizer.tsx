@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 interface ListNode {
   id: string;
   value: number;
-  next?: ListNode;
+  next?: ListNode | null;
 }
 
 const LinkedListVisualizer: React.FC = () => {
@@ -92,7 +92,7 @@ const LinkedListVisualizer: React.FC = () => {
       }
 
       x += nodeWidth + 50;
-      current = current.next;
+      current = current.next!;
     }
   };
 

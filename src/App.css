@@ -115,15 +115,21 @@
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
 }
 
 .number-input {
   flex: 1;
+  min-width: 120px;
+  max-width: 100%;
   padding: 0.75rem;
   border: 2px solid #e2e8f0;
   border-radius: 8px;
   font-size: 1rem;
   transition: border-color 0.2s;
+  box-sizing: border-box;
 }
 
 .number-input:focus {
@@ -141,6 +147,9 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
+  min-width: fit-content;
+  flex-shrink: 0;
 }
 
 .insert-btn:hover, .sort-btn:hover, .reset-btn:hover, .pop-btn:hover, .dequeue-btn:hover {
@@ -398,6 +407,8 @@
   background: #f8fafc;
   border-radius: 8px;
   border: 1px solid #e2e8f0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .input-section h4 {
@@ -407,9 +418,71 @@
   font-weight: 600;
 }
 
+.input-description {
+  margin: 0 0 0.75rem 0;
+  color: #4a5568;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.array-input {
+  flex: 1;
+  min-width: 200px;
+  max-width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  font-family: 'Courier New', monospace;
+  box-sizing: border-box;
+}
+
+.array-input:focus {
+  outline: none;
+  border-color: #4299e1;
+}
+
+.array-preview {
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  background: #f1f5f9;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #2d3748;
+  font-family: 'Courier New', monospace;
+}
+
+.create-btn {
+  background: #805ad5;
+  color: white;
+  white-space: nowrap;
+  min-width: fit-content;
+  flex-shrink: 0;
+}
+
+.create-btn:hover {
+  background: #6b46c1;
+}
+
+.delete-btn {
+  background: #e53e3e;
+  color: white;
+  white-space: nowrap;
+  min-width: fit-content;
+  flex-shrink: 0;
+}
+
+.delete-btn:hover {
+  background: #c53030;
+}
+
 .search-btn {
   background: #38a169;
   color: white;
+  white-space: nowrap;
+  min-width: fit-content;
+  flex-shrink: 0;
 }
 
 .search-btn:hover {
@@ -419,6 +492,9 @@
 .algorithm-btn {
   background: #805ad5;
   color: white;
+  white-space: nowrap;
+  min-width: fit-content;
+  flex-shrink: 0;
 }
 
 .algorithm-btn:hover {
@@ -433,6 +509,24 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .input-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .number-input, .array-input {
+    min-width: auto;
+    max-width: none;
+    width: 100%;
+  }
+  
+  .create-btn, .insert-btn, .search-btn, .algorithm-btn, .delete-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 768px) {
   .visualizer {
     grid-template-columns: 1fr;
@@ -465,6 +559,26 @@
   }
   
   .control-btn {
+    justify-content: center;
+  }
+  
+  .input-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .number-input, .array-input {
+    min-width: auto;
+    max-width: none;
+    width: 100%;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .create-btn, .insert-btn, .search-btn, .algorithm-btn, .delete-btn {
+    width: 100%;
     justify-content: center;
   }
 }

@@ -1,9 +1,9 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 
 export interface AnimationStep {
   description: string;
   data: any;
-  highlights?: number[];
+  highlights?: (number | string)[];
   delay?: number;
 }
 
@@ -119,7 +119,7 @@ export const useAnimation = (): UseAnimationReturn => {
   }, []);
 
   // Execute step when currentStep changes
-  React.useEffect(() => {
+  useEffect(() => {
     if (isPlaying && !isPaused) {
       executeCurrentStep();
     }

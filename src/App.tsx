@@ -12,7 +12,7 @@ import GraphVisualizer from './components/GraphVisualizer';
 type DataStructure = 'tree' | 'linkedlist' | 'array' | 'stack' | 'queue' | 'graph';
 
 export default function App() {
-  const [activeStructure, setActiveStructure] = useState<DataStructure>('tree');
+  const [activeStructure, setActiveStructure] = useState<DataStructure>('array');
 
   const dataStructures = [
     { id: 'tree' as DataStructure, name: 'Binary Tree', icon: '🌳' },
@@ -38,7 +38,7 @@ export default function App() {
       case 'graph':
         return <GraphVisualizer />;
       default:
-        return <TreeVisualizer />;
+        return <div>Loading...</div>;
     }
   };
 

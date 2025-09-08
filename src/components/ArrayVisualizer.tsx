@@ -6,6 +6,7 @@ const ArrayVisualizer: React.FC = () => {
   const [array, setArray] = useState<number[]>([64, 34, 25, 12, 22, 11, 90]);
   const [inputValue, setInputValue] = useState<string>('');
   const [searchValue, setSearchValue] = useState<string>('');
+  const [arrayInput, setArrayInput] = useState<string>('64, 34, 25, 12, 22, 11, 90');
   const [highlightedIndices, setHighlightedIndices] = useState<number[]>([]);
   const [searchResult, setSearchResult] = useState<number>(-1);
   const [animationSpeed, setAnimationSpeed] = useState(1000);
@@ -27,6 +28,7 @@ const ArrayVisualizer: React.FC = () => {
     const scale = (canvas.height - 100) / maxValue;
 
     array.forEach((value, index) => {
+      
       const x = index * (barWidth + 2);
       const barHeight = value * scale;
       const y = canvas.height - barHeight - 50;
@@ -110,7 +112,7 @@ const ArrayVisualizer: React.FC = () => {
 
     await animation.executeSteps(steps, (step, index) => {
       setArray(step.data);
-      setHighlightedIndices(step.highlights || []);
+      setHighlightedIndices((step.highlights || []) as number[]);
     });
   };
 
@@ -154,7 +156,7 @@ const ArrayVisualizer: React.FC = () => {
     }
 
     await animation.executeSteps(steps, (step, index) => {
-      setHighlightedIndices(step.highlights || []);
+      setHighlightedIndices((step.highlights || []) as number[]);
     });
   };
 
@@ -174,7 +176,7 @@ const ArrayVisualizer: React.FC = () => {
 
     await animation.executeSteps(steps, (step, index) => {
       setArray(step.data);
-      setHighlightedIndices(step.highlights || []);
+      setHighlightedIndices((step.highlights || []) as number[]);
     });
     setInputValue('');
   };
@@ -201,13 +203,31 @@ const ArrayVisualizer: React.FC = () => {
 
     await animation.executeSteps(steps, (step, index) => {
       setArray(step.data);
-      setHighlightedIndices(step.highlights || []);
+      setHighlightedIndices((step.highlights || []) as number[]);
     });
   };
 
-  // Reset array
+  // Parse comma-separated values and update array
+  const updateArrayFromInput = () => {
+    const values = arrayInput
+      .split(',')
+      .map(val => val.trim())
+      .filter(val => val !== '')
+      .map(val => parseInt(val))
+      .filter(val => !isNaN(val));
+    
+    if (values.length > 0) {
+      setArray(values);
+      setHighlightedIndices([]);
+      setSearchResult(-1);
+      animation.reset();
+    }
+  };
+
+  // Reset array to default
   const resetArray = () => {
     setArray([64, 34, 25, 12, 22, 11, 90]);
+    setArrayInput('64, 34, 25, 12, 22, 11, 90');
     setHighlightedIndices([]);
     setSearchResult(-1);
     animation.reset();
@@ -222,6 +242,27 @@ const ArrayVisualizer: React.FC = () => {
       <div className="controls">
         <h2>Array Visualizer</h2>
         
+        <div className="input-section">
+          <h4>Create Your Array</h4>
+          <p className="input-description">Enter comma-separated numbers to create your array:</p>
+          <form onSubmit={(e) => { e.preventDefault(); updateArrayFromInput(); }} className="input-form">
+            <input
+              type="text"
+              value={arrayInput}
+              onChange={(e) => setArrayInput(e.target.value)}
+              placeholder="e.g., 64, 34, 25, 12, 22, 11, 90"
+              className="array-input"
+              disabled={animation.isPlaying}
+            />
+            <button type="submit" className="create-btn" disabled={animation.isPlaying}>
+              Create Array
+            </button>
+          </form>
+          <div className="array-preview">
+            <strong>Current Array:</strong> [{array.join(', ')}]
+          </div>
+        </div>
+
         <div className="input-section">
           <h4>Add Element</h4>
           <form onSubmit={(e) => { e.preventDefault(); insertElement(); }} className="input-form">
@@ -280,10 +321,11 @@ const ArrayVisualizer: React.FC = () => {
         />
 
         <div className="array-info">
-          <p><strong>Operations:</strong></p>
-          <p>• Add: Insert element at end</p>
-          <p>• Search: Find element position</p>
-          <p>• Sort: Arrange elements in order</p>
+          <p><strong>How to Use:</strong></p>
+          <p>1. <strong>Create Array:</strong> Enter comma-separated numbers</p>
+          <p>2. <strong>Add Element:</strong> Insert new element at end</p>
+          <p>3. <strong>Search:</strong> Find element position in array</p>
+          <p>4. <strong>Sort:</strong> Watch bubble sort algorithm</p>
           <p><strong>Colors:</strong> Blue=Normal, Red=Comparing, Green=Found</p>
         </div>
       </div>
